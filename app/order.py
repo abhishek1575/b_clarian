@@ -27,17 +27,7 @@ def get_order_status(order_id):
         "last_updated": last_updated
     }), 200
 
-# --------------------------------------------------
-# Endpoint: Update Order Status Manually
-# Version: update_order_status/v1.0
-# Date: 2025-03-28
-# Summary: Allows an admin to manually update the status of an order.
-# Expected JSON payload:
-# {
-#   "order_id": <order_id>,
-#   "status": "<new_status>"
-# }
-# --------------------------------------------------
+
 @order_bp.route('/order/status/update', methods=['POST'])
 @jwt_required()
 def update_order_status():
@@ -65,18 +55,8 @@ def update_order_status():
 
     return jsonify({"message": f"Order {order_id} status updated to {new_status}"}), 200
 
-# --------------------------------------------------
-# Endpoint: Payment Webhook for Updating Order Status
-# Version: payment_webhook/v1.0
-# Date: 2025-03-28
-# Summary: Receives webhook notifications from the payment gateway to update the order status automatically.
-# Expected JSON payload:
-# {
-#   "order_id": <order_id>,
-#   "payment_status": "success" or "failed",
-#   "transaction_id": "<optional_transaction_id>"
-# }
-# --------------------------------------------------
+
+
 @order_bp.route('/order/webhook/payment', methods=['POST'])
 def payment_webhook():
     data = request.get_json()

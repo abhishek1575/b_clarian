@@ -1,0 +1,42 @@
+to add to git 
+
+
+git add .
+git commit -m "Your commit message"
+git push
+
+
+
+
+---------------------
+
+
+# to add an item 
+# start 'flask shell'
+
+
+from app import db
+from app.models import Product
+
+# product1 = Product(name="Apple", description="Fresh red apples", price=3.99, unit="1 kg", stock=100, category="Fruits", image_url="apple.jpg")
+# product2 = Product(name="Banana", description="Organic bananas", price=1.99, unit="1 dozen", stock=50, category="Fruits", image_url="banana.jpg")
+# product3 = Product(name="Carrot", description="Crunchy carrots", price=2.49, unit="500g", stock=75, category="Vegetables", image_url="carrot.jpg")
+
+# db.session.add_all([product1, product2, product3])
+# db.session.commit()
+# print("Sample products added successfully!")
+
+
+# exit()
+
+
+------------------
+
+# to add image 
+# flask shell
+# from app import db
+# from app.models import Product
+# product = Product.query.get(1)  # Change 1 to your product ID
+# product.image_url = "static/images/example.jpg"  # Change to your actual image file
+# db.session.commit()
+# print(product.image_url)

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import base64
 
 db = SQLAlchemy()
 
@@ -11,6 +12,20 @@ class User(db.Model):
     phone = db.Column(db.String(15), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False) 
     role = db.Column(db.String(20), nullable=False, default="user")
+    isActive = db.Column(db.Boolean, default=True)  # New field to track user activity
+
+    def to_dict(self):
+        return {
+        "id": self.id,
+        "name": self.name,
+        "email": self.email,
+        "phone": self.phone,
+        "role": self.role,
+        "isActive": self.isActive,
+        }
+
+    
+
 # Product Model
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,17 +36,20 @@ class Product(db.Model):
     stock = db.Column(db.Integer, nullable=False, default=0)
     category = db.Column(db.String(100), nullable=False)
     image_url = db.Column(db.String(255), nullable=True)
-    discount = db.Column(db.Float, default=0.0)  
-
+  
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
+            "description": self.description,
+            "stock": self.stock,
             "category": self.category,
             "price": self.price,
             "unit": self.unit,
-            "image_url": self.image_url
+            "image_url": self.image_url  # ✅ Return the image URL here
         }
+
+    
 # Cart Model (Items added to cart)
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -59,4 +77,3 @@ class Address(db.Model):
     state = db.Column(db.String(100), nullable=False)
     zip_code = db.Column(db.String(20), nullable=False)
     country = db.Column(db.String(100), nullable=False)
-

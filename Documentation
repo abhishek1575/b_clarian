@@ -1,0 +1,255 @@
+Grocery Shop Website Documentation
+
+1. Project Overview
+
+Purpose
+
+The Grocery Shop Website is an online shopping platform designed to provide users with a seamless grocery purchasing experience. The platform enables customers to browse products, add items to their cart, and place orders with convenient payment options. The system also includes an admin panel for managing products, orders, and users.
+
+The main goals of the project include:
+
+Providing a user-friendly interface for easy navigation.
+
+Implementing a secure authentication system to protect user data.
+
+Offering multiple payment methods for smooth transactions.
+
+Ensuring real-time order tracking to enhance customer experience.
+
+Enabling efficient admin management of inventory and orders.
+
+Technology Stack
+
+The project utilizes modern web development technologies to ensure performance, security, and scalability.
+
+Backend (Server-Side):
+
+Flask: A lightweight and powerful web framework for handling API requests.
+
+Flask-SQLAlchemy: ORM for database management.
+
+Flask-Migrate: Handles database migrations smoothly.
+
+Flask-CORS: Enables secure cross-origin requests.
+
+JWT (JSON Web Token): Secure user authentication.
+
+Frontend (Client-Side):
+
+React: A modern JavaScript library for building user interfaces.
+
+Redux: For managing the global state of the application.
+
+Axios: For handling API requests.
+
+Tailwind CSS: Ensures a clean and responsive UI.
+
+Database:
+
+MySQL: A relational database for storing users, products, orders, and transactions.
+
+Mobile App:
+
+Flutter: A cross-platform framework for developing the grocery shop’s mobile application.
+
+Key Features
+
+The platform is designed with essential features to enhance user and admin experiences:
+
+User Features:
+
+Account Management: Users can register, log in, and manage their profiles.
+
+Product Browsing: Search and filter grocery products by category.
+
+Shopping Cart: Users can add/remove items and adjust quantities.
+
+Checkout & Payment: Secure transactions with multiple payment methods.
+
+Order Tracking: Users can view the status of their placed orders.
+
+Wishlist: Save favorite products for future purchases.
+
+Admin Features:
+
+Product Management: Add, update, or delete grocery items.
+
+Order Management: View and update the status of orders.
+
+User Management: Manage registered users and their activity.
+
+Dashboard Analytics: Track sales, revenue, and customer activity.
+
+Security Features:
+
+JWT Authentication: Ensures secure login and user sessions.
+
+Data Encryption: Protects sensitive customer information.
+
+Role-Based Access: Separates admin privileges from regular users.
+
+2. Requirements
+
+Functional Requirements
+
+These requirements define how the system should function to meet business and user needs.
+
+User Registration & Authentication
+
+Users must be able to create an account with an email, phone number, and password.
+
+An OTP-based email verification process will ensure valid accounts.
+
+JWT authentication will be used for secure user sessions.
+
+Product Browsing & Search
+
+Users can browse available products without logging in.
+
+A search feature allows filtering products by category, price, and popularity.
+
+Shopping Cart Management
+
+Logged-in users can add/remove products from their cart.
+
+The cart will maintain items across sessions until checkout or manual removal.
+
+Checkout & Order Processing
+
+Users must log in to place an order.
+
+The checkout process includes selecting a delivery address and choosing a payment method.
+
+Order details are stored in the database for tracking and management.
+
+Payment Integration
+
+Users can select from multiple payment methods (credit/debit cards, UPI, COD, etc.).
+
+Transactions will be securely processed via third-party payment gateways.
+
+Order Tracking & Management
+
+Users can track the status of their orders (e.g., pending, shipped, delivered).
+
+Admins can update order statuses and notify customers.
+
+Admin Management
+
+Admins can add, update, or remove products from the catalog.
+
+Admins can manage user accounts and view sales reports.
+
+Non-functional Requirements
+
+These requirements focus on the system’s performance, security, and usability.
+
+Security
+
+User passwords should be encrypted.
+
+API communication must be secured with HTTPS.
+
+Role-based access control will be implemented for different user types.
+
+Performance & Scalability
+
+The system should handle a growing number of users and products efficiently.
+
+Database queries should be optimized for fast response times.
+
+Usability & Accessibility
+
+The UI must be responsive for both mobile and desktop users.
+
+The platform should be easy to navigate for all user types.
+
+Reliability & Availability
+
+The system should maintain uptime even during high-traffic periods.
+
+Regular backups will ensure data safety.
+
+3. System Architecture
+
+Backend
+
+Uses Flask with MySQL.
+
+API-based communication with the frontend.
+
+JWT authentication for secure login sessions.
+
+Frontend
+
+React-based interface with a shopping-friendly UI.
+
+Uses Redux for state management.
+
+Database Schema
+
+User Table: Stores user details.
+
+Product Table: Stores product details.
+
+Cart Table: Stores user cart items.
+
+Order Table: Stores order details.
+
+Payment Table: Stores payment transactions.
+
+4. User Flow
+
+1. Authentication Flow
+
+Users can browse without logging in.
+
+Clicking 'Add to Cart' redirects to Login.
+
+New users must register and verify their email using OTP.
+
+Upon successful login, users are redirected to their previous page.
+
+2. Shopping & Checkout Flow
+
+Users add products to the cart.
+
+Proceed to checkout.
+
+Select or enter a delivery address.
+
+Choose a payment method.
+
+Confirm order and complete payment.
+
+5. API Endpoints
+
+Authentication APIs
+
+POST /register - User registration with OTP verification.
+
+POST /login - User login with JWT authentication.
+
+Cart APIs
+
+POST /cart/add - Add product to cart.
+
+GET /cart - View cart items.
+
+DELETE /cart/remove - Remove item from cart.
+
+Order APIs
+
+POST /checkout - Create an order.
+
+POST /payment - Process payment.
+
+GET /orders - Get user orders.
+
+6. Future Enhancements
+
+Implement AI-based product recommendations.
+
+Introduce subscription-based grocery plans.
+
+Multi-vendor support for marketplace expansion.

@@ -1,8 +1,8 @@
 from app import app
-from flask import Flask,Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,create_refresh_token
-from datetime import timedelta,datetime
+from datetime import timedelta
 from app.models import db, User
 import jwt
 # from config import Config
@@ -41,6 +41,21 @@ def register():
         return jsonify({"error": "Database error"}), 500
 
     return jsonify({"message": "User registered successfully"}), 201
+
+# if we want to implement flsk for specific routes
+
+# from flask import Flask, request, jsonify
+# from flask_cors import cross_origin
+
+# app = Flask(__name__)
+
+# @app.route('/auth/register', methods=['POST'])
+# @cross_origin(origin='http://localhost:5173')  # Allow requests from React frontend
+# def register():
+#     data = request.json
+#     return jsonify({"message": "User registered successfully"}), 200
+
+
 
 
 # Register admin
@@ -108,7 +123,6 @@ def login():
     return jsonify({
         "message": "Login successful",
         "access_token": access_token,
-        "refresh_token": refresh_token,
         "user": {
             "id": user.id,
             "name": user.name,
