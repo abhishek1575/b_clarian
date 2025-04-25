@@ -1,4 +1,4 @@
-from app import app
+# import app from create_app
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,create_refresh_token
@@ -42,24 +42,7 @@ def register():
 
     return jsonify({"message": "User registered successfully"}), 201
 
-# if we want to implement flsk for specific routes
-
-# from flask import Flask, request, jsonify
-# from flask_cors import cross_origin
-
-# app = Flask(__name__)
-
-# @app.route('/auth/register', methods=['POST'])
-# @cross_origin(origin='http://localhost:5173')  # Allow requests from React frontend
-# def register():
-#     data = request.json
-#     return jsonify({"message": "User registered successfully"}), 200
-
-
-
-
 # Register admin
-
 @auth_bp.route('/register-admin', methods=['POST'])
 def register_admin():
     data = request.get_json() or {}
@@ -105,6 +88,7 @@ def generate_token(user):
 
 
 #Login
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json() or {}
@@ -114,8 +98,9 @@ def login():
 
     user = User.query.filter_by(email=email).first()
 
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid credentials"}), 401
+    # now check user.isActive (camelCase)
+    if not user or not check_password_hash(user.password, password) or not user.isActive:
+        return jsonify({"error": "Invalid credentials or account inactive"}), 401
 
     access_token = create_access_token(identity=str(user.id), expires_delta=timedelta(days=1))
     refresh_token = create_refresh_token(identity=str(user.id))
@@ -165,48 +150,6 @@ def change_password():
 @jwt_required()
 def logout():
     return jsonify({"message": "Logout successful."}), 200
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
