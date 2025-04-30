@@ -89,11 +89,18 @@ def add_product():
         "product": new_product.to_dict()
     }), 201
 
-from flask import send_from_directory, current_app
+from flask import send_file, current_app
 
 @product_bp.route('/img/<filename>', methods=['GET'])
 def serve_image(filename):
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    if not os.path.exists(file_path):
+        return jsonify({"error": "File not found"}), 404
+    return send_file(file_path, mimetype='image/png')
+
+# @product_bp.route('/img/<filename>', methods=['GET'])
+# def serve_image(filename):
+#     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
 
 
 # Update a product (Admin Only)

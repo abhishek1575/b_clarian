@@ -163,6 +163,27 @@ def list_runners():
         })
     return jsonify(runners), 200
 
+# 7️⃣ Get all Runners with full details
+@runner_bp.route('/all_runners', methods=['GET'])
+@jwt_required()
+def get_all_runners():
+    admin_id = get_jwt_identity()
+    if not is_admin(admin_id):
+        return jsonify({"error": "Unauthorized"}), 403
+
+    runners = User.query.filter_by(role='runner').all()
+    result = [ 
+        {
+            "id": r.id,
+            "name": r.name,
+            "email": r.email,
+            "phone": r.phone,
+            "isActive": r.isActive
+        } for r in runners 
+    ]
+    return jsonify(result), 200
+
+
 @runner_bp.route('/<int:runner_id>/history', methods=['GET'])
 @jwt_required()
 def get_runner_history(runner_id):
