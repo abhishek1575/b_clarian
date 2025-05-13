@@ -4,6 +4,8 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import db, User, Order, RunnerAssignments
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 runner_bp = Blueprint('runner', __name__,)
 
@@ -102,6 +104,8 @@ def assign_runner():
     db.session.commit()
     return jsonify({"message": f"Runner {runner.name} assigned to order {order.id}"}), 201
 
+
+# 🔄 5. Update Runner Assignment Status
 @runner_bp.route('/assignment/<int:assign_id>', methods=['PUT'])
 @jwt_required()
 def update_assignment(assign_id):
@@ -184,6 +188,7 @@ def get_all_runners():
     return jsonify(result), 200
 
 
+# 🕓 8. Runner Assignment History
 @runner_bp.route('/<int:runner_id>/history', methods=['GET'])
 @jwt_required()
 def get_runner_history(runner_id):
@@ -216,3 +221,46 @@ def get_runner_history(runner_id):
         })
 
     return jsonify(history), 200
+
+
+#regiter runner 
+@runner_bp.route('/register', methods=['POST'])
+@jwt_required()
+def register_runner():
+    admin_id = get_jwt_identity()
+    if not is_admin(admin_id):
+        return jsonify({"error": "Unauthorized"}), 403
+
+    data = request.get_json() or {}
+
+    name = data.get("name", "").strip()
+    email = data.get("email", "").strip().lower()
+    phone = data.get("phone", "").strip()
+    password = data.get("password", "").strip()
+
+    if not all([name, email, phone, password]):
+        return jsonify({"error": "All fields are required"}), 400
+
+    if User.query.filter_by(email=email).first():
+        return jsonify({"error": "Email already registered"}), 409
+    if User.query.filter_by(phone=phone).first():
+        return jsonify({"error": "Phone number already exists"}), 400
+
+    hashed_password = generate_password_hash(password)
+    new_runner = User(
+        name=name,
+        email=email,
+        phone=phone,
+        password=hashed_password,
+        role="runner"
+    )
+
+    db.session.add(new_runner)
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("Error committing to the database:", e)
+        return jsonify({"error": "Database error"}), 500
+
+    return jsonify({"message": f"Runner '{name}' registered successfully."}), 201

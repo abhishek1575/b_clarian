@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required
 
 
 product_bp = Blueprint('product', __name__,url_prefix='/api')
-
+# product_bp = Blueprint('product', __name__,url_prefix='/products')
 
 UPLOAD_FOLDER = os.path.abspath(os.path.join(app.root_path,'img'))
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

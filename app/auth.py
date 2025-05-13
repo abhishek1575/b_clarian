@@ -42,6 +42,8 @@ def register():
 
     return jsonify({"message": "User registered successfully"}), 201
 
+
+
 # Register admin
 @auth_bp.route('/register-admin', methods=['POST'])
 def register_admin():

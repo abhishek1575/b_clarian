@@ -1,11 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.models import db, User,Product,Order
+from app.models import db, User
 from app import app  
-
-
-
-
 
 # User Management:
 
